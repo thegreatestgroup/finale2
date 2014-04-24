@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AddOperation.cs" />
     <Compile Include="Attribute.cs" />
+    <Compile Include="DeleteOperation.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
