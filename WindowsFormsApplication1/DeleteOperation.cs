@@ -71,5 +71,35 @@ namespace WindowsFormsApplication2
 
             sqlConnection.queryDatabase(tableName, deleteQuery);
         }
+
+        /*
+         *  DELETE FROM tableName
+         *  sqlWhereClause (where sqlWhereClause is a string something like "WHERE CustomerName='Alfreds Futterkiste' AND ContactName='Maria Anders';")
+         *  for complex delete operations.
+         */
+        public void deleteAttributeFromTableComplexWithRollback(string tableName, string columnName, string sqlWhereClause)
+        {
+            string deleteQuery = "BEGIN TRY " + 
+                " DECLARE @TranName VARCHAR(20);" +
+                " SELECT @TranName = 'DeleteTransactionComplex';" +
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Deleting an attribute.';";
+
+            deleteQuery += " DELETE FROM " + tableName;
+            deleteQuery += " " + sqlWhereClause;
+
+            deleteQuery += " COMMIT TRANSACTION @TranName;" +
+                " GO" +
+                " END TRY";
+
+            deleteQuery += " BEGIN CATCH" +
+                " IF @@TRANCOUNT > 0" +
+                " ROLLBACK" +
+                " END CATCH";
+
+            SQLConnection sqlConnection = new SQLConnection();
+
+            sqlConnection.queryDatabase(tableName, deleteQuery);
+        }
     }
 }

@@ -68,7 +68,7 @@ namespace WindowsFormsApplication2
                 " GO" +
                 " END TRY";
 
-            insertQuery = "BEGIN CATCH" +
+            insertQuery += " BEGIN CATCH" +
                 " IF @@TRANCOUNT > 0" +
                 " ROLLBACK" +
                 " END CATCH";

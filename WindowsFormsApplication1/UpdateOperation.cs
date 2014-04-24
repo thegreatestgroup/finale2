@@ -77,5 +77,36 @@ namespace WindowsFormsApplication2
 
             sqlConnection.queryDatabase(tableName, updateQuery);
         }
+
+        /*
+         *  UPDATE tableName
+         *  SET sqlSetStatement (Where sqlSetStatement is a string that equals "column1=value1,column2=value2" or something similar) 
+         *  WHERE columnName=rowId;
+         */
+        public void updateAttributeInTableComplexWithRollback(string tableName, string columnName, string rowId, string sqlSetStatement)
+        {
+            string updateQuery = "BEGIN TRY " + 
+                " DECLARE @TranName VARCHAR(20);" +
+                " SELECT @TranName = 'UpdateTransaction';" +
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Updating an attribute.';";
+
+            updateQuery += " UPDATE " + tableName;
+            updateQuery += " SET " + sqlSetStatement;
+            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
+
+            updateQuery += " COMMIT TRANSACTION @TranName;" +
+                " GO" +
+                " END TRY";
+
+            updateQuery += " BEGIN CATCH" +
+                " IF @@TRANCOUNT > 0" +
+                " ROLLBACK" +
+                " END CATCH";
+
+            SQLConnection sqlConnection = new SQLConnection();
+
+            sqlConnection.queryDatabase(tableName, updateQuery);
+        }
     }
 }
