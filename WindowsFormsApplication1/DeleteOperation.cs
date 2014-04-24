@@ -21,7 +21,7 @@ namespace WindowsFormsApplication2
         public void deleteAttributeFromTable(string tableName, string columnName, string valueToDelete)
         {
             string insertQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'InsertTransaction';" +
+                " SELECT @TranName = 'DeleteTransaction';" +
                 " BEGIN TRANSACTION @TranName;";
 
             string deleteQuery = "DELETE FROM " + tableName;
