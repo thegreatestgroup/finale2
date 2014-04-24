@@ -20,36 +20,36 @@ namespace WindowsFormsApplication2
 
         public void deleteAttributeFromTable(string tableName, string columnName, string valueToDelete)
         {
-            string insertQuery = "DECLARE @TranName VARCHAR(20);" +
+            string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'DeleteTransaction';" +
                 " BEGIN TRANSACTION @TranName;";
 
-            string deleteQuery = "DELETE FROM " + tableName;
+            deleteQuery += " DELETE FROM " + tableName;
             deleteQuery += " WHERE " + columnName + "=" + valueToDelete + ";";
 
-            insertQuery += " COMMIT TRANSACTION @TranName;" +
+            deleteQuery += " COMMIT TRANSACTION @TranName;" +
                 " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
-            sqlConnection.queryDatabase(tableName, insertQuery);
+            sqlConnection.queryDatabase(tableName, deleteQuery);
         }
 
-        public void deleteAttributeFromTable(string tableName, string columnName, string sqlWhereClause)
+        public void deleteAttributeFromTableComplex(string tableName, string columnName, string sqlWhereClause)
         {
-            string insertQuery = "DECLARE @TranName VARCHAR(20);" +
+            string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'DeleteTransactionComplex';" +
                 " BEGIN TRANSACTION @TranName;";
 
-            string deleteQuery = "DELETE FROM " + tableName;
+            deleteQuery += " DELETE FROM " + tableName;
             deleteQuery += " " + sqlWhereClause;
 
-            insertQuery += " COMMIT TRANSACTION @TranName;" +
+            deleteQuery += " COMMIT TRANSACTION @TranName;" +
                 " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
-            sqlConnection.queryDatabase(tableName, insertQuery);
+            sqlConnection.queryDatabase(tableName, deleteQuery);
         }
     }
 }
