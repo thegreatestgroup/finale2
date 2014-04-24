@@ -8,6 +8,15 @@ namespace WindowsFormsApplication2
 {
     class DeleteOperation
     {
+        /* GENERIC SQL DELETE STATEMENT (more info ... http://www.w3schools.com/sql/sql_delete.asp)
+         *  DELETE FROM table_name
+         *  WHERE some_column=some_value;
+         */
+
+        /*
+         *  DELETE FROM tableName
+         *  WHERE columnName=valueToDelete;
+         */
         public void deleteAttributeFromTableWithoutTransaction(string tableName, string columnName, string valueToDelete)
         {
             string deleteQuery = "DELETE FROM " + tableName;
@@ -18,6 +27,10 @@ namespace WindowsFormsApplication2
             sqlConnection.queryDatabase(tableName, deleteQuery);
         }
 
+        /*
+         *  DELETE FROM tableName
+         *  WHERE columnName=valueToDelete;
+         */
         public void deleteAttributeFromTable(string tableName, string columnName, string valueToDelete)
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
@@ -35,6 +48,11 @@ namespace WindowsFormsApplication2
             sqlConnection.queryDatabase(tableName, deleteQuery);
         }
 
+        /*
+         *  DELETE FROM tableName
+         *  sqlWhereClause (where sqlWhereClause is a string something like "WHERE CustomerName='Alfreds Futterkiste' AND ContactName='Maria Anders';")
+         *  for complex delete operations.
+         */
         public void deleteAttributeFromTableComplex(string tableName, string columnName, string sqlWhereClause)
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
