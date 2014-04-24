@@ -20,7 +20,7 @@ namespace WindowsFormsApplication2
         public void addAttributeToTableWithoutTransaction(string tableName, string listOfValues)
         {
             string insertQuery = "INSERT INTO " + tableName;
-            insertQuery += " VALUES (" + listOfValues + ");";
+            insertQuery +=      " VALUES (" + listOfValues + ");";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -34,15 +34,13 @@ namespace WindowsFormsApplication2
         public void addAttributeToTable(string tableName, string listOfValues)
         {
             string insertQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'InsertTransaction';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Adding a new attribute.';";
-            
-            insertQuery += " INSERT INTO " + tableName;
-            insertQuery += " VALUES (" + listOfValues + ");";
-
-            insertQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO";
+                                " SELECT @TranName = 'InsertTransaction';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Adding a new attribute.';";   
+            insertQuery +=      " INSERT INTO " + tableName;
+            insertQuery +=      " VALUES (" + listOfValues + ");";
+            insertQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -56,22 +54,19 @@ namespace WindowsFormsApplication2
         public void addAttributeToTableWithRollback(string tableName, string listOfValues)
         {
             string insertQuery = "BEGIN TRY " +
-                " DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'InsertTransaction';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Adding a new attribute.';";
-
-            insertQuery += " INSERT INTO " + tableName;
-            insertQuery += " VALUES (" + listOfValues + ");";
-
-            insertQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO" +
-                " END TRY";
-
-            insertQuery += " BEGIN CATCH" +
-                " IF @@TRANCOUNT > 0" +
-                " ROLLBACK" +
-                " END CATCH";
+                                " DECLARE @TranName VARCHAR(20);" +
+                                " SELECT @TranName = 'InsertTransaction';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Adding a new attribute.';";
+            insertQuery +=      " INSERT INTO " + tableName;
+            insertQuery +=      " VALUES (" + listOfValues + ");";
+            insertQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO" +
+                                " END TRY";
+            insertQuery +=      " BEGIN CATCH" +
+                                " IF @@TRANCOUNT > 0" +
+                                " ROLLBACK" +
+                                " END CATCH";
 
             SQLConnection sqlConnection = new SQLConnection();
 

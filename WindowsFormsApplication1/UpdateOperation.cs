@@ -22,8 +22,8 @@ namespace WindowsFormsApplication2
         public void updateAttributeInTableWithoutTransaction(string tableName, string columnName, string rowId, string sqlSetStatement)
         {
             string updateQuery = "UPDATE " + tableName;
-            updateQuery += " SET " + sqlSetStatement;
-            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
+            updateQuery +=      " SET " + sqlSetStatement;
+            updateQuery +=      " WHERE " + columnName + "=" + rowId + ";";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -38,15 +38,13 @@ namespace WindowsFormsApplication2
         public void updateAttributeInTable(string tableName, string columnName, string rowId, string newColumnValue)
         {
             string updateQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'UpdateTransaction';" +
-                " BEGIN TRANSACTION @TranName;";
-
-            updateQuery += " UPDATE " + tableName;
-            updateQuery += " SET " + columnName + "=" + newColumnValue;
-            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
-
-            updateQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO";
+                                " SELECT @TranName = 'UpdateTransaction';" +
+                                " BEGIN TRANSACTION @TranName;";
+            updateQuery +=      " UPDATE " + tableName;
+            updateQuery +=      " SET " + columnName + "=" + newColumnValue;
+            updateQuery +=      " WHERE " + columnName + "=" + rowId + ";";
+            updateQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -62,16 +60,14 @@ namespace WindowsFormsApplication2
         public void updateAttributeInTableComplex(string tableName, string columnName, string rowId, string sqlSetStatement)
         {
             string updateQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'UpdateTransaction';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Updating an attribute.';";
-
-            updateQuery += " UPDATE " + tableName;
-            updateQuery += " SET " + sqlSetStatement;
-            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
-
-            updateQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO";
+                                " SELECT @TranName = 'UpdateTransaction';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Updating an attribute.';";
+            updateQuery +=      " UPDATE " + tableName;
+            updateQuery +=      " SET " + sqlSetStatement;
+            updateQuery +=      " WHERE " + columnName + "=" + rowId + ";";
+            updateQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -86,23 +82,20 @@ namespace WindowsFormsApplication2
         public void updateAttributeInTableComplexWithRollback(string tableName, string columnName, string rowId, string sqlSetStatement)
         {
             string updateQuery = "BEGIN TRY " + 
-                " DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'UpdateTransaction';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Updating an attribute.';";
-
-            updateQuery += " UPDATE " + tableName;
-            updateQuery += " SET " + sqlSetStatement;
-            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
-
-            updateQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO" +
-                " END TRY";
-
-            updateQuery += " BEGIN CATCH" +
-                " IF @@TRANCOUNT > 0" +
-                " ROLLBACK" +
-                " END CATCH";
+                                " DECLARE @TranName VARCHAR(20);" +
+                                " SELECT @TranName = 'UpdateTransaction';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Updating an attribute.';";
+            updateQuery +=      " UPDATE " + tableName;
+            updateQuery +=      " SET " + sqlSetStatement;
+            updateQuery +=      " WHERE " + columnName + "=" + rowId + ";";
+            updateQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO" +
+                                " END TRY";
+            updateQuery +=      " BEGIN CATCH" +
+                                " IF @@TRANCOUNT > 0" +
+                                " ROLLBACK" +
+                                " END CATCH";
 
             SQLConnection sqlConnection = new SQLConnection();
 

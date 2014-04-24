@@ -20,7 +20,7 @@ namespace WindowsFormsApplication2
         public void deleteAttributeFromTableWithoutTransaction(string tableName, string columnName, string valueToDelete)
         {
             string deleteQuery = "DELETE FROM " + tableName;
-            deleteQuery += " WHERE " + columnName + "=" + valueToDelete + ";";
+            deleteQuery +=      " WHERE " + columnName + "=" + valueToDelete + ";";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -34,15 +34,13 @@ namespace WindowsFormsApplication2
         public void deleteAttributeFromTable(string tableName, string columnName, string valueToDelete)
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'DeleteTransaction';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Deleting an attribute.';";
-
-            deleteQuery += " DELETE FROM " + tableName;
-            deleteQuery += " WHERE " + columnName + "=" + valueToDelete + ";";
-
-            deleteQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO";
+                                " SELECT @TranName = 'DeleteTransaction';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Deleting an attribute.';";
+            deleteQuery +=      " DELETE FROM " + tableName;
+            deleteQuery +=      " WHERE " + columnName + "=" + valueToDelete + ";";
+            deleteQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -57,15 +55,13 @@ namespace WindowsFormsApplication2
         public void deleteAttributeFromTableComplex(string tableName, string columnName, string sqlWhereClause)
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'DeleteTransactionComplex';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Deleting an attribute.';";
-
-            deleteQuery += " DELETE FROM " + tableName;
-            deleteQuery += " " + sqlWhereClause;
-
-            deleteQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO";
+                                " SELECT @TranName = 'DeleteTransactionComplex';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Deleting an attribute.';";
+            deleteQuery +=      " DELETE FROM " + tableName;
+            deleteQuery +=      " " + sqlWhereClause;
+            deleteQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO";
 
             SQLConnection sqlConnection = new SQLConnection();
 
@@ -80,22 +76,19 @@ namespace WindowsFormsApplication2
         public void deleteAttributeFromTableComplexWithRollback(string tableName, string columnName, string sqlWhereClause)
         {
             string deleteQuery = "BEGIN TRY " + 
-                " DECLARE @TranName VARCHAR(20);" +
-                " SELECT @TranName = 'DeleteTransactionComplex';" +
-                " BEGIN TRANSACTION @TranName;" +
-                " WITH MARK N'Deleting an attribute.';";
-
-            deleteQuery += " DELETE FROM " + tableName;
-            deleteQuery += " " + sqlWhereClause;
-
-            deleteQuery += " COMMIT TRANSACTION @TranName;" +
-                " GO" +
-                " END TRY";
-
-            deleteQuery += " BEGIN CATCH" +
-                " IF @@TRANCOUNT > 0" +
-                " ROLLBACK" +
-                " END CATCH";
+                                " DECLARE @TranName VARCHAR(20);" +
+                                " SELECT @TranName = 'DeleteTransactionComplex';" +
+                                " BEGIN TRANSACTION @TranName;" +
+                                " WITH MARK N'Deleting an attribute.';";
+            deleteQuery +=      " DELETE FROM " + tableName;
+            deleteQuery +=      " " + sqlWhereClause;
+            deleteQuery +=      " COMMIT TRANSACTION @TranName;" +
+                                " GO" +
+                                " END TRY";
+            deleteQuery +=      " BEGIN CATCH" +
+                                " IF @@TRANCOUNT > 0" +
+                                " ROLLBACK" +
+                                " END CATCH";
 
             SQLConnection sqlConnection = new SQLConnection();
 
