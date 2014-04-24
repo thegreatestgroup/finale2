@@ -48,5 +48,34 @@ namespace WindowsFormsApplication2
 
             sqlConnection.queryDatabase(tableName, insertQuery);
         }
+
+        /* 
+         *  INSERT INTO tableName
+         *  VALUES (listOfValues); (where listOfValues is a string something like "value1,value2,value3,...")
+         */
+        public void addAttributeToTableWithRollback(string tableName, string listOfValues)
+        {
+            string insertQuery = "BEGIN TRY " +
+                " DECLARE @TranName VARCHAR(20);" +
+                " SELECT @TranName = 'InsertTransaction';" +
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Adding a new attribute.';";
+
+            insertQuery += " INSERT INTO " + tableName;
+            insertQuery += " VALUES (" + listOfValues + ");";
+
+            insertQuery += " COMMIT TRANSACTION @TranName;" +
+                " GO" +
+                " END TRY";
+
+            insertQuery = "BEGIN CATCH" +
+                " IF @@TRANCOUNT > 0" +
+                " ROLLBACK" +
+                " END CATCH";
+
+            SQLConnection sqlConnection = new SQLConnection();
+
+            sqlConnection.queryDatabase(tableName, insertQuery);
+        }
     }
 }
