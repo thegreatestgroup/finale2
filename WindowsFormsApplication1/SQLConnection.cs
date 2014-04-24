@@ -11,7 +11,7 @@ namespace WindowsFormsApplication2
         private const string DEFAULT_USER_ID = "GreatestGroup";
         private const string DEFAULT_PASSWORD = "password";
         private const string DEFAULT_SERVER = "champlainmssql.cabect4hsdzs.us-east-1.rds.amazonaws.com,7788";
-        private const string DEFAULT_DATABASE_NAME = "Greatest";
+        private const string DEFAULT_DATABASE_NAME = "Champlain Music Store";
         private const string DEFAULT_TIMEOUT = "connection timeout=30";
 
         private string mUserId;
