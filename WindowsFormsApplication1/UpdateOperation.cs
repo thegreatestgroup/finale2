@@ -63,7 +63,8 @@ namespace WindowsFormsApplication2
         {
             string updateQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'UpdateTransaction';" +
-                " BEGIN TRANSACTION @TranName;";
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Updating an attribute.';";
 
             updateQuery += " UPDATE " + tableName;
             updateQuery += " SET " + sqlSetStatement;

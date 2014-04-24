@@ -35,7 +35,8 @@ namespace WindowsFormsApplication2
         {
             string insertQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'InsertTransaction';" +
-                " BEGIN TRANSACTION @TranName;";
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Adding a new attribute.';";
             
             insertQuery += " INSERT INTO " + tableName;
             insertQuery += " VALUES (" + listOfValues + ");";

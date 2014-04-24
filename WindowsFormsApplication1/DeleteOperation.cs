@@ -35,7 +35,8 @@ namespace WindowsFormsApplication2
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'DeleteTransaction';" +
-                " BEGIN TRANSACTION @TranName;";
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Deleting an attribute.';";
 
             deleteQuery += " DELETE FROM " + tableName;
             deleteQuery += " WHERE " + columnName + "=" + valueToDelete + ";";
@@ -57,7 +58,8 @@ namespace WindowsFormsApplication2
         {
             string deleteQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'DeleteTransactionComplex';" +
-                " BEGIN TRANSACTION @TranName;";
+                " BEGIN TRANSACTION @TranName;" +
+                " WITH MARK N'Deleting an attribute.';";
 
             deleteQuery += " DELETE FROM " + tableName;
             deleteQuery += " " + sqlWhereClause;
