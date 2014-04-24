@@ -8,26 +8,42 @@ namespace WindowsFormsApplication2
 {
     class UpdateOperation
     {
-        public void updateAttributeInTableWithoutTransaction(string tableName, string columnName, string updateAttributeKey, string sqlSetStatement)
+        /* GENERIC SQL UPDATE STATEMENT (more info ... http://www.w3schools.com/sql/sql_update.asp)
+         *  UPDATE table_name
+         *  SET column1=value1,column2=value2,...
+         *  WHERE some_column=some_value;
+         */
+
+        /*
+         *  UPDATE tableName
+         *  SET sqlSetStatement (Where sqlSetStatement is a string that equals "column1=value1,column2=value2" or something similar) 
+         *  WHERE columnName=rowId;
+         */
+        public void updateAttributeInTableWithoutTransaction(string tableName, string columnName, string rowId, string sqlSetStatement)
         {
             string updateQuery = "UPDATE " + tableName;
             updateQuery += " SET " + sqlSetStatement;
-            updateQuery += " WHERE " + columnName + "=" + updateAttributeKey + ";";
+            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
 
             SQLConnection sqlConnection = new SQLConnection();
 
             sqlConnection.queryDatabase(tableName, updateQuery);
         }
 
-        public void updateAttributeInTable(string tableName, string columnName, string updateAttributeKey, string updateAttributeValue)
+        /*
+         *  UPDATE tableName
+         *  SET columnName=newColumnValue
+         *  WHERE columnName=rowId;
+         *
+        public void updateAttributeInTable(string tableName, string columnName, string rowId, string newColumnValue)
         {
             string updateQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'UpdateTransaction';" +
                 " BEGIN TRANSACTION @TranName;";
 
             updateQuery += " UPDATE " + tableName;
-            updateQuery += " SET " + columnName + "=" + updateAttributeValue;
-            updateQuery += " WHERE " + columnName + "=" + updateAttributeKey + ";";
+            updateQuery += " SET " + columnName + "=" + newColumnValue;
+            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
 
             updateQuery += " COMMIT TRANSACTION @TranName;" +
                 " GO";
@@ -36,8 +52,14 @@ namespace WindowsFormsApplication2
 
             sqlConnection.queryDatabase(tableName, updateQuery);
         }
+        */
 
-        public void updateAttributeInTableComplex(string tableName, string columnName, string updateAttributeKey, string sqlSetStatement)
+        /*
+         *  UPDATE tableName
+         *  SET sqlSetStatement (Where sqlSetStatement is a string that equals "column1=value1,column2=value2" or something similar) 
+         *  WHERE columnName=rowId;
+         */
+        public void updateAttributeInTableComplex(string tableName, string columnName, string rowId, string sqlSetStatement)
         {
             string updateQuery = "DECLARE @TranName VARCHAR(20);" +
                 " SELECT @TranName = 'UpdateTransaction';" +
@@ -45,7 +67,7 @@ namespace WindowsFormsApplication2
 
             updateQuery += " UPDATE " + tableName;
             updateQuery += " SET " + sqlSetStatement;
-            updateQuery += " WHERE " + columnName + "=" + updateAttributeKey + ";";
+            updateQuery += " WHERE " + columnName + "=" + rowId + ";";
 
             updateQuery += " COMMIT TRANSACTION @TranName;" +
                 " GO";
