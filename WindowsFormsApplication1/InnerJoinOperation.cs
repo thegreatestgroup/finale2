@@ -21,7 +21,7 @@ namespace WindowsFormsApplication2
          *  INNER JOIN table2Name
          *  ON table1Name.joinOnId=table2Name.joinOnId;
          */
-        public void innerJoinTables(string listOfSelectedColumns, string joinOnId, string table1Name, string table2Name)
+        public System.Data.DataTable innerJoinTables(string listOfSelectedColumns, string joinOnId, string table1Name, string table2Name)
         {
             string joinQuery = "SELECT " + listOfSelectedColumns +
                 " FROM " + table1Name +
@@ -29,8 +29,11 @@ namespace WindowsFormsApplication2
                 " ON " + table1Name + "." + joinOnId + "=" + table2Name + "." + joinOnId + ";";
 
             SQLConnection sqlConnection = new SQLConnection();
+            System.Data.DataTable table;
 
-            sqlConnection.queryDatabase(table1Name, joinQuery);
+            table = sqlConnection.queryDatabase(table1Name, joinQuery);
+
+            return table;
         }
 
         /*
@@ -40,7 +43,7 @@ namespace WindowsFormsApplication2
          *  ON table1Name.joinOnId=table2Name.joinOnId
          *  ORDER BY orderByClause (where orderByClause is something like "Customers.CustomerName")
          */
-        public void innerJoinTables(string listOfSelectedColumns, string joinOnId, string table1Name, string table2Name, string orderByClause)
+        public System.Data.DataTable innerJoinTables(string listOfSelectedColumns, string joinOnId, string table1Name, string table2Name, string orderByClause)
         {
             string joinQuery = "SELECT " + listOfSelectedColumns +
                 " FROM " + table1Name +
@@ -49,8 +52,11 @@ namespace WindowsFormsApplication2
                 " ORDER BY " + orderByClause + ";";
 
             SQLConnection sqlConnection = new SQLConnection();
+            System.Data.DataTable table;
 
-            sqlConnection.queryDatabase(table1Name, joinQuery);
+            table = sqlConnection.queryDatabase(table1Name, joinQuery);
+
+            return table;
         }
     }
 }
