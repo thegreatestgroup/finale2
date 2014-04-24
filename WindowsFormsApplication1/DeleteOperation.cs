@@ -17,5 +17,22 @@ namespace WindowsFormsApplication2
 
             sqlConnection.queryDatabase(tableName, deleteQuery);
         }
+
+        public void deleteAttributeFromTable(string tableName, string columnName, string valueToDelete)
+        {
+            string insertQuery = "DECLARE @TranName VARCHAR(20);" +
+                " SELECT @TranName = 'InsertTransaction';" +
+                " BEGIN TRANSACTION @TranName;";
+
+            string deleteQuery = "DELETE FROM " + tableName;
+            deleteQuery += " WHERE " + columnName + "=" + valueToDelete + ";";
+
+            insertQuery += " COMMIT TRANSACTION @TranName;" +
+                " GO";
+
+            SQLConnection sqlConnection = new SQLConnection();
+
+            sqlConnection.queryDatabase(tableName, insertQuery);
+        }
     }
 }
